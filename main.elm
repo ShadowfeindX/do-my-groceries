@@ -1,12 +1,13 @@
 module Main exposing (..)
 
 import Html
+import Html.Attributes exposing (..)
 
 main =
   let
     text = "Hello from Elm!"
   in
-    Html.div [][ view model ]
+    Html.div [] (view model)
 
 
 model =
@@ -20,6 +21,22 @@ model =
 view model =
   let
     display (item,price) =
-      Html.li [][ Html.text (item ++ " - $" ++ toString(price)) ]
+      Html.li [][
+        Html.div [ ] [
+          Html.text (item ++ " - $" ++ toString(price)),
+          Html.button [ class "ui button" ] [ Html.text "Edit" ],
+          Html.button [ class "ui button" ] [ Html.text "Delete" ]
+        ]
+      ]
   in
-    Html.ul [] (List.map display model)
+    [
+      Html.div [ class "ui action input" ] [
+        Html.input [ type' "text", placeholder "Item" ] [],
+        Html.div [ class "ui labeled input" ] [
+          Html.div [ class "ui label" ] [ Html.text "$" ],
+          Html.input [ type' "text", placeholder "Price" ] []
+        ],
+        Html.button [ class "ui button" ] [ Html.text "Add" ]
+      ],
+      Html.ul [] (List.map display model)
+    ]
