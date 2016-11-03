@@ -1,13 +1,17 @@
 module Main exposing (..)
-
-import Html
+import Dom
+import Html exposing (..)
 import Html.Attributes exposing (..)
+
+--script : String -> List (Attribute msg) -> Html msg
+script attributes children =
+    node "script" attributes [text children]
 
 main =
   let
     text = "Hello from Elm!"
   in
-    Html.div [] (view model)
+    div [] (view model)
 
 
 model =
@@ -21,22 +25,53 @@ model =
 view model =
   let
     display (item,price) =
-      Html.li [][
-        Html.div [ ] [
-          Html.text (item ++ " - $" ++ toString(price)),
-          Html.button [ class "ui button" ] [ Html.text "Edit" ],
-          Html.button [ class "ui button" ] [ Html.text "Delete" ]
-        ]
+      a [ class "item" ] [
+        text item,
+        div [ class "ui tag label" ] [ text ("$" ++ toString(price)) ]
       ]
   in
     [
-      Html.div [ class "ui action input" ] [
-        Html.input [ type' "text", placeholder "Item" ] [],
-        Html.div [ class "ui labeled input" ] [
-          Html.div [ class "ui label" ] [ Html.text "$" ],
-          Html.input [ type' "text", placeholder "Price" ] []
+      div [ class "ui action input" ] [
+        input [ type' "text", placeholder "Item" ] [],
+        div [ class "ui labeled input" ] [
+          div [ class "ui label" ] [ text "$" ],
+          input [ type' "text", placeholder "Price" ] []
         ],
-        Html.button [ class "ui button" ] [ Html.text "Add" ]
+        button [ id "add button", class "ui button" ] [ text "Add" ],
+        script [ id "my-script" ] """
+        alert("behold my mighty power!");
+        alert("tremble in fear elm");
+        """
       ],
-      Html.ul [] (List.map display model)
+      dropdownTest1,
+      dropdownTest2,
+      div [ class "ui divided selection list" ] (List.map display model)
     ]
+
+dropdownTest1 =
+  div [class "ui simple compact selection dropdown"] [
+    input [name "gender"][],
+    i [class "dropdown icon"][],
+    div [class "default text"] [text "Gender"],
+    div [class "menu"] [
+      div [class "item"] [text "Male"],
+      div [class "item"] [text "Female"]
+    ]
+  ]
+dropdownTest2 =
+  div [class "ui compact selection dropdown"] [
+    input [name "gender"][],
+    i [class "dropdown icon"][],
+    div [class "default text"] [text "Gender"],
+    div [class "menu"] [
+      div [class "item"] [text "Male"],
+      div [class "item"] [text "Female"]
+    ]
+  ]
+
+buttonTest =
+  div [ class "ui buttons" ] [
+    button [ class "ui button" ] [ text "Edit" ],
+    div [ class "or" ] [],
+    button [ class "ui negative button" ] [ text "Delete" ]
+  ]

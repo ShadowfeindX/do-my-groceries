@@ -1,46 +1,211 @@
-var _user$project$Main$view = function (model) {
-	var display = function (_p0) {
-		var _p1 = _p0;
-		return A2(
-			_elm_lang$html$Html$li,
+var _user$project$Main$buttonTest = A2(
+	_elm_lang$html$Html$div,
+	_elm_lang$core$Native_List.fromArray(
+		[
+			_elm_lang$html$Html_Attributes$class('ui buttons')
+		]),
+	_elm_lang$core$Native_List.fromArray(
+		[
+			A2(
+			_elm_lang$html$Html$button,
 			_elm_lang$core$Native_List.fromArray(
-				[]),
+				[
+					_elm_lang$html$Html_Attributes$class('ui button')
+				]),
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_elm_lang$html$Html$text('Edit')
+				])),
+			A2(
+			_elm_lang$html$Html$div,
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_elm_lang$html$Html_Attributes$class('or')
+				]),
+			_elm_lang$core$Native_List.fromArray(
+				[])),
+			A2(
+			_elm_lang$html$Html$button,
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_elm_lang$html$Html_Attributes$class('ui negative button')
+				]),
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_elm_lang$html$Html$text('Delete')
+				]))
+		]));
+var _user$project$Main$dropdownTest2 = A2(
+	_elm_lang$html$Html$div,
+	_elm_lang$core$Native_List.fromArray(
+		[
+			_elm_lang$html$Html_Attributes$class('ui compact selection dropdown')
+		]),
+	_elm_lang$core$Native_List.fromArray(
+		[
+			A2(
+			_elm_lang$html$Html$input,
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_elm_lang$html$Html_Attributes$name('gender')
+				]),
+			_elm_lang$core$Native_List.fromArray(
+				[])),
+			A2(
+			_elm_lang$html$Html$i,
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_elm_lang$html$Html_Attributes$class('dropdown icon')
+				]),
+			_elm_lang$core$Native_List.fromArray(
+				[])),
+			A2(
+			_elm_lang$html$Html$div,
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_elm_lang$html$Html_Attributes$class('default text')
+				]),
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_elm_lang$html$Html$text('Gender')
+				])),
+			A2(
+			_elm_lang$html$Html$div,
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_elm_lang$html$Html_Attributes$class('menu')
+				]),
 			_elm_lang$core$Native_List.fromArray(
 				[
 					A2(
 					_elm_lang$html$Html$div,
 					_elm_lang$core$Native_List.fromArray(
-						[]),
+						[
+							_elm_lang$html$Html_Attributes$class('item')
+						]),
+					_elm_lang$core$Native_List.fromArray(
+						[
+							_elm_lang$html$Html$text('Male')
+						])),
+					A2(
+					_elm_lang$html$Html$div,
+					_elm_lang$core$Native_List.fromArray(
+						[
+							_elm_lang$html$Html_Attributes$class('item')
+						]),
+					_elm_lang$core$Native_List.fromArray(
+						[
+							_elm_lang$html$Html$text('Female')
+						]))
+				]))
+		]));
+var _user$project$Main$dropdownTest1 = A2(
+	_elm_lang$html$Html$div,
+	_elm_lang$core$Native_List.fromArray(
+		[
+			_elm_lang$html$Html_Attributes$class('ui simple compact selection dropdown')
+		]),
+	_elm_lang$core$Native_List.fromArray(
+		[
+			A2(
+			_elm_lang$html$Html$input,
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_elm_lang$html$Html_Attributes$name('gender')
+				]),
+			_elm_lang$core$Native_List.fromArray(
+				[])),
+			A2(
+			_elm_lang$html$Html$i,
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_elm_lang$html$Html_Attributes$class('dropdown icon')
+				]),
+			_elm_lang$core$Native_List.fromArray(
+				[])),
+			A2(
+			_elm_lang$html$Html$div,
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_elm_lang$html$Html_Attributes$class('default text')
+				]),
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_elm_lang$html$Html$text('Gender')
+				])),
+			A2(
+			_elm_lang$html$Html$div,
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_elm_lang$html$Html_Attributes$class('menu')
+				]),
+			_elm_lang$core$Native_List.fromArray(
+				[
+					A2(
+					_elm_lang$html$Html$div,
+					_elm_lang$core$Native_List.fromArray(
+						[
+							_elm_lang$html$Html_Attributes$class('item')
+						]),
+					_elm_lang$core$Native_List.fromArray(
+						[
+							_elm_lang$html$Html$text('Male')
+						])),
+					A2(
+					_elm_lang$html$Html$div,
+					_elm_lang$core$Native_List.fromArray(
+						[
+							_elm_lang$html$Html_Attributes$class('item')
+						]),
+					_elm_lang$core$Native_List.fromArray(
+						[
+							_elm_lang$html$Html$text('Female')
+						]))
+				]))
+		]));
+var _user$project$Main$model = _elm_lang$core$Native_List.fromArray(
+	[
+		{ctor: '_Tuple2', _0: 'Apples', _1: 1.45},
+		{ctor: '_Tuple2', _0: 'Bananas', _1: 1.22},
+		{ctor: '_Tuple2', _0: 'Oreos', _1: 2.67},
+		{ctor: '_Tuple2', _0: 'Chicken Breast', _1: 5.77}
+	]);
+var _user$project$Main$script = F2(
+	function (attributes, children) {
+		return A3(
+			_elm_lang$html$Html$node,
+			'script',
+			attributes,
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_elm_lang$html$Html$text(children)
+				]));
+	});
+var _user$project$Main$view = function (model) {
+	var display = function (_p0) {
+		var _p1 = _p0;
+		return A2(
+			_elm_lang$html$Html$a,
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_elm_lang$html$Html_Attributes$class('item')
+				]),
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_elm_lang$html$Html$text(_p1._0),
+					A2(
+					_elm_lang$html$Html$div,
+					_elm_lang$core$Native_List.fromArray(
+						[
+							_elm_lang$html$Html_Attributes$class('ui tag label')
+						]),
 					_elm_lang$core$Native_List.fromArray(
 						[
 							_elm_lang$html$Html$text(
 							A2(
 								_elm_lang$core$Basics_ops['++'],
-								_p1._0,
-								A2(
-									_elm_lang$core$Basics_ops['++'],
-									' - $',
-									_elm_lang$core$Basics$toString(_p1._1)))),
-							A2(
-							_elm_lang$html$Html$button,
-							_elm_lang$core$Native_List.fromArray(
-								[
-									_elm_lang$html$Html_Attributes$class('ui button')
-								]),
-							_elm_lang$core$Native_List.fromArray(
-								[
-									_elm_lang$html$Html$text('Edit')
-								])),
-							A2(
-							_elm_lang$html$Html$button,
-							_elm_lang$core$Native_List.fromArray(
-								[
-									_elm_lang$html$Html_Attributes$class('ui button')
-								]),
-							_elm_lang$core$Native_List.fromArray(
-								[
-									_elm_lang$html$Html$text('Delete')
-								]))
+								'$',
+								_elm_lang$core$Basics$toString(_p1._1)))
 						]))
 				]));
 	};
@@ -95,27 +260,32 @@ var _user$project$Main$view = function (model) {
 					_elm_lang$html$Html$button,
 					_elm_lang$core$Native_List.fromArray(
 						[
+							_elm_lang$html$Html_Attributes$id('add button'),
 							_elm_lang$html$Html_Attributes$class('ui button')
 						]),
 					_elm_lang$core$Native_List.fromArray(
 						[
 							_elm_lang$html$Html$text('Add')
-						]))
+						])),
+					A2(
+					_user$project$Main$script,
+					_elm_lang$core$Native_List.fromArray(
+						[
+							_elm_lang$html$Html_Attributes$id('my-script')
+						]),
+					'\n        alert(\"behold my mighty power!\");\n        alert(\"tremble in fear elm\");\n        ')
 				])),
+			_user$project$Main$dropdownTest1,
+			_user$project$Main$dropdownTest2,
 			A2(
-			_elm_lang$html$Html$ul,
+			_elm_lang$html$Html$div,
 			_elm_lang$core$Native_List.fromArray(
-				[]),
+				[
+					_elm_lang$html$Html_Attributes$class('ui divided selection list')
+				]),
 			A2(_elm_lang$core$List$map, display, model))
 		]);
 };
-var _user$project$Main$model = _elm_lang$core$Native_List.fromArray(
-	[
-		{ctor: '_Tuple2', _0: 'Apples', _1: 1.45},
-		{ctor: '_Tuple2', _0: 'Bananas', _1: 1.22},
-		{ctor: '_Tuple2', _0: 'Oreos', _1: 2.67},
-		{ctor: '_Tuple2', _0: 'Chicken Breast', _1: 5.77}
-	]);
 var _user$project$Main$main = {
 	main: function () {
 		var text = 'Hello from Elm!';
