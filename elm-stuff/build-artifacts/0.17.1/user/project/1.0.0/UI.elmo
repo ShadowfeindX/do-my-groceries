@@ -1,23 +1,57 @@
 var _user$project$UI$controller = F2(
 	function (msg, model) {
 		var _p0 = msg;
-		if (_p0.ctor === 'Mdl') {
-			return A2(_debois$elm_mdl$Material$update, _p0._0, model);
-		} else {
-			return {
-				ctor: '_Tuple2',
-				_0: _elm_lang$core$Native_Utils.update(
-					model,
-					{currentTab: _p0._0}),
-				_1: _elm_lang$core$Platform_Cmd$none
-			};
+		switch (_p0.ctor) {
+			case 'Mdl':
+				return A2(_debois$elm_mdl$Material$update, _p0._0, model);
+			case 'SelectTab':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{currentTab: _p0._0}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			default:
+				var newModel = model.currentStore;
+				var currentStore = _elm_lang$core$Native_Utils.update(
+					newModel,
+					{name: _p0._0});
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{currentStore: currentStore}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
 		}
 	});
-var _user$project$UI$model = {mdl: _debois$elm_mdl$Material$model, currentStore: 'All', currentTab: 0, totalStores: 3};
+var _user$project$UI$model = {
+	mdl: _debois$elm_mdl$Material$model,
+	currentStore: {
+		name: 'All',
+		stock: 0,
+		inventory: _elm_lang$core$Native_List.fromArray(
+			[])
+	},
+	currentTab: 0,
+	totalStores: 3
+};
 var _user$project$UI$Model = F4(
 	function (a, b, c, d) {
 		return {mdl: a, currentStore: b, currentTab: c, totalStores: d};
 	});
+var _user$project$UI$Store = F3(
+	function (a, b, c) {
+		return {name: a, stock: b, inventory: c};
+	});
+var _user$project$UI$Item = F3(
+	function (a, b, c) {
+		return {cost: a, name: b, img: c};
+	});
+var _user$project$UI$SelectStore = function (a) {
+	return {ctor: 'SelectStore', _0: a};
+};
 var _user$project$UI$SelectTab = function (a) {
 	return {ctor: 'SelectTab', _0: a};
 };
@@ -64,7 +98,7 @@ var _user$project$UI$view = function (model) {
 								[]),
 							_elm_lang$core$Native_List.fromArray(
 								[
-									_elm_lang$html$Html$text('Elm')
+									_elm_lang$html$Html$text(model.currentStore.name)
 								]))
 						])),
 					A2(
@@ -79,7 +113,7 @@ var _user$project$UI$view = function (model) {
 								[]),
 							_elm_lang$core$Native_List.fromArray(
 								[
-									_elm_lang$html$Html$text('F#')
+									_elm_lang$html$Html$text(model.currentStore.name)
 								]))
 						])),
 					A2(
@@ -94,7 +128,7 @@ var _user$project$UI$view = function (model) {
 								[]),
 							_elm_lang$core$Native_List.fromArray(
 								[
-									_elm_lang$html$Html$text('Lisp')
+									_elm_lang$html$Html$text(model.currentStore.name)
 								]))
 						]))
 				])),
@@ -126,7 +160,9 @@ var _user$project$UI$view = function (model) {
 				_elm_lang$core$Native_List.fromArray(
 					[
 						_debois$elm_mdl$Material_Layout$onClick(
-						_debois$elm_mdl$Material_Layout$toggleDrawer(_user$project$UI$Mdl))
+						_debois$elm_mdl$Material_Layout$toggleDrawer(_user$project$UI$Mdl)),
+						_debois$elm_mdl$Material_Layout$onClick(
+						_user$project$UI$SelectStore('All'))
 					]),
 				_elm_lang$core$Native_List.fromArray(
 					[
@@ -137,7 +173,7 @@ var _user$project$UI$view = function (model) {
 				_elm_lang$core$Native_List.fromArray(
 					[
 						_debois$elm_mdl$Material_Layout$onClick(
-						_debois$elm_mdl$Material_Layout$toggleDrawer(_user$project$UI$Mdl))
+						_user$project$UI$SelectStore('Walmart'))
 					]),
 				_elm_lang$core$Native_List.fromArray(
 					[
@@ -148,7 +184,7 @@ var _user$project$UI$view = function (model) {
 				_elm_lang$core$Native_List.fromArray(
 					[
 						_debois$elm_mdl$Material_Layout$onClick(
-						_debois$elm_mdl$Material_Layout$toggleDrawer(_user$project$UI$Mdl))
+						_user$project$UI$SelectStore('Target'))
 					]),
 				_elm_lang$core$Native_List.fromArray(
 					[
@@ -159,7 +195,7 @@ var _user$project$UI$view = function (model) {
 				_elm_lang$core$Native_List.fromArray(
 					[
 						_debois$elm_mdl$Material_Layout$onClick(
-						_debois$elm_mdl$Material_Layout$toggleDrawer(_user$project$UI$Mdl))
+						_user$project$UI$SelectStore('Food Lion'))
 					]),
 				_elm_lang$core$Native_List.fromArray(
 					[

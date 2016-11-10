@@ -108,11 +108,11 @@ view model =
             { stores =
                 List.ul []
                     [ List.li []
-                        [ List.content [] [ Html.text model.currentStore ] ]
+                        [ List.content [] [ Html.text model.currentStore.name ] ]
                     , List.li []
-                        [ List.content [] [ Html.text model.currentStore ] ]
+                        [ List.content [] [ Html.text model.currentStore.name ] ]
                     , List.li []
-                        [ List.content [] [ Html.text model.currentStore ] ]
+                        [ List.content [] [ Html.text model.currentStore.name ] ]
                     ]
             , groceries = Html.body [] [ Html.text "Page 2" ]
             , recipes = Html.body [] [ Html.text "Page 3" ]
@@ -160,6 +160,17 @@ controller msg model =
             , Cmd.none
             )
 
+        SelectStore store ->
+            let
+                newModel =
+                    model.currentStore
+
+                currentStore =
+                    { newModel | name = store }
+            in
+                ( { model | currentStore = currentStore }, Cmd.map Mdl Layout.toggleDrawer )
 
 
---_ -> ( model, Cmd.none )
+
+--    _ ->
+--        ( model, Cmd.none )
