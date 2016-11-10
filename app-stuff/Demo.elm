@@ -107,8 +107,8 @@ view model =
       [ Layout.selectedTab model.tab
       , Layout.onSelectTab SelectTab
       , Layout.fixedHeader
+      , Layout.fixedDrawer
       , Layout.fixedTabs
-      , Layout.scrolling
       ]
       { header = header model
       , drawer = drawer 

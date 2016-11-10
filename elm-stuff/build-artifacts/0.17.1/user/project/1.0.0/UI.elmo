@@ -1,0 +1,248 @@
+var _user$project$UI$controller = F2(
+	function (msg, model) {
+		var _p0 = msg;
+		if (_p0.ctor === 'Mdl') {
+			return A2(_debois$elm_mdl$Material$update, _p0._0, model);
+		} else {
+			return {
+				ctor: '_Tuple2',
+				_0: _elm_lang$core$Native_Utils.update(
+					model,
+					{currentTab: _p0._0}),
+				_1: _elm_lang$core$Platform_Cmd$none
+			};
+		}
+	});
+var _user$project$UI$model = {mdl: _debois$elm_mdl$Material$model, currentStore: 'All', currentTab: 0, totalStores: 3};
+var _user$project$UI$Model = F4(
+	function (a, b, c, d) {
+		return {mdl: a, currentStore: b, currentTab: c, totalStores: d};
+	});
+var _user$project$UI$SelectTab = function (a) {
+	return {ctor: 'SelectTab', _0: a};
+};
+var _user$project$UI$Mdl = function (a) {
+	return {ctor: 'Mdl', _0: a};
+};
+var _user$project$UI$view = function (model) {
+	var main = function (_p1) {
+		var _p2 = _p1;
+		var _p4 = _p2._0;
+		var _p3 = _p2._1;
+		switch (_p3) {
+			case 0:
+				return _p4.stores;
+			case 1:
+				return _p4.groceries;
+			case 2:
+				return _p4.recipes;
+			default:
+				return A2(
+					_elm_lang$html$Html$body,
+					_elm_lang$core$Native_List.fromArray(
+						[]),
+					_elm_lang$core$Native_List.fromArray(
+						[]));
+		}
+	};
+	var pages = {
+		stores: A2(
+			_debois$elm_mdl$Material_List$ul,
+			_elm_lang$core$Native_List.fromArray(
+				[]),
+			_elm_lang$core$Native_List.fromArray(
+				[
+					A2(
+					_debois$elm_mdl$Material_List$li,
+					_elm_lang$core$Native_List.fromArray(
+						[]),
+					_elm_lang$core$Native_List.fromArray(
+						[
+							A2(
+							_debois$elm_mdl$Material_List$content,
+							_elm_lang$core$Native_List.fromArray(
+								[]),
+							_elm_lang$core$Native_List.fromArray(
+								[
+									_elm_lang$html$Html$text('Elm')
+								]))
+						])),
+					A2(
+					_debois$elm_mdl$Material_List$li,
+					_elm_lang$core$Native_List.fromArray(
+						[]),
+					_elm_lang$core$Native_List.fromArray(
+						[
+							A2(
+							_debois$elm_mdl$Material_List$content,
+							_elm_lang$core$Native_List.fromArray(
+								[]),
+							_elm_lang$core$Native_List.fromArray(
+								[
+									_elm_lang$html$Html$text('F#')
+								]))
+						])),
+					A2(
+					_debois$elm_mdl$Material_List$li,
+					_elm_lang$core$Native_List.fromArray(
+						[]),
+					_elm_lang$core$Native_List.fromArray(
+						[
+							A2(
+							_debois$elm_mdl$Material_List$content,
+							_elm_lang$core$Native_List.fromArray(
+								[]),
+							_elm_lang$core$Native_List.fromArray(
+								[
+									_elm_lang$html$Html$text('Lisp')
+								]))
+						]))
+				])),
+		groceries: A2(
+			_elm_lang$html$Html$body,
+			_elm_lang$core$Native_List.fromArray(
+				[]),
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_elm_lang$html$Html$text('Page 2')
+				])),
+		recipes: A2(
+			_elm_lang$html$Html$body,
+			_elm_lang$core$Native_List.fromArray(
+				[]),
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_elm_lang$html$Html$text('Page 3')
+				]))
+	};
+	var drawer = A2(
+		_debois$elm_mdl$Material_Layout$navigation,
+		_elm_lang$core$Native_List.fromArray(
+			[]),
+		_elm_lang$core$Native_List.fromArray(
+			[
+				A2(
+				_debois$elm_mdl$Material_Layout$link,
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_debois$elm_mdl$Material_Layout$onClick(
+						_debois$elm_mdl$Material_Layout$toggleDrawer(_user$project$UI$Mdl))
+					]),
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html$text('All')
+					])),
+				A2(
+				_debois$elm_mdl$Material_Layout$link,
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_debois$elm_mdl$Material_Layout$onClick(
+						_debois$elm_mdl$Material_Layout$toggleDrawer(_user$project$UI$Mdl))
+					]),
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html$text('Walmart')
+					])),
+				A2(
+				_debois$elm_mdl$Material_Layout$link,
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_debois$elm_mdl$Material_Layout$onClick(
+						_debois$elm_mdl$Material_Layout$toggleDrawer(_user$project$UI$Mdl))
+					]),
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html$text('Target')
+					])),
+				A2(
+				_debois$elm_mdl$Material_Layout$link,
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_debois$elm_mdl$Material_Layout$onClick(
+						_debois$elm_mdl$Material_Layout$toggleDrawer(_user$project$UI$Mdl))
+					]),
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html$text('Food Lion')
+					]))
+			]));
+	var header = A2(
+		_debois$elm_mdl$Material_Layout$row,
+		_elm_lang$core$Native_List.fromArray(
+			[]),
+		_elm_lang$core$Native_List.fromArray(
+			[
+				A2(
+				_debois$elm_mdl$Material_Layout$title,
+				_elm_lang$core$Native_List.fromArray(
+					[]),
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html$text('Do My Groceries')
+					]))
+			]));
+	var tabs = _elm_lang$core$Native_List.fromArray(
+		[
+			_elm_lang$html$Html$text('Stores'),
+			_elm_lang$html$Html$text('Groceries'),
+			_elm_lang$html$Html$text('Recipes')
+		]);
+	return A3(
+		_debois$elm_mdl$Material_Scheme$topWithScheme,
+		_debois$elm_mdl$Material_Color$Blue,
+		_debois$elm_mdl$Material_Color$Amber,
+		A4(
+			_debois$elm_mdl$Material_Layout$render,
+			_user$project$UI$Mdl,
+			model.mdl,
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_debois$elm_mdl$Material_Layout$fixedHeader,
+					_debois$elm_mdl$Material_Layout$fixedDrawer,
+					_debois$elm_mdl$Material_Layout$waterfall(false),
+					_debois$elm_mdl$Material_Layout$selectedTab(model.currentTab),
+					_debois$elm_mdl$Material_Layout$onSelectTab(_user$project$UI$SelectTab)
+				]),
+			{
+				header: _elm_lang$core$Native_List.fromArray(
+					[header]),
+				drawer: _elm_lang$core$Native_List.fromArray(
+					[drawer]),
+				tabs: {
+					ctor: '_Tuple2',
+					_0: tabs,
+					_1: _elm_lang$core$Native_List.fromArray(
+						[
+							_debois$elm_mdl$Material_Color$background(
+							A2(_debois$elm_mdl$Material_Color$color, _debois$elm_mdl$Material_Color$Amber, _debois$elm_mdl$Material_Color$A700))
+						])
+				},
+				main: _elm_lang$core$Native_List.fromArray(
+					[
+						main(
+						{ctor: '_Tuple2', _0: pages, _1: model.currentTab})
+					])
+			}));
+};
+var _user$project$UI$main = {
+	main: function () {
+		var subs = function (model) {
+			return _elm_lang$core$Platform_Sub$batch(
+				_elm_lang$core$Native_List.fromArray(
+					[
+						A2(_debois$elm_mdl$Material$subscriptions, _user$project$UI$Mdl, model)
+					]));
+		};
+		var init = {
+			ctor: '_Tuple2',
+			_0: _user$project$UI$model,
+			_1: _elm_lang$core$Platform_Cmd$batch(
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_debois$elm_mdl$Material$init(_user$project$UI$Mdl)
+					]))
+		};
+		return _elm_lang$html$Html_App$program(
+			{init: init, subscriptions: subs, update: _user$project$UI$controller, view: _user$project$UI$view});
+	}()
+};

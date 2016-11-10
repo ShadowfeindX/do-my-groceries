@@ -175,8 +175,8 @@ var _user$project$Main$view = function (model) {
 					_debois$elm_mdl$Material_Layout$selectedTab(model.tab),
 					_debois$elm_mdl$Material_Layout$onSelectTab(_user$project$Main$SelectTab),
 					_debois$elm_mdl$Material_Layout$fixedHeader,
-					_debois$elm_mdl$Material_Layout$fixedTabs,
-					_debois$elm_mdl$Material_Layout$scrolling
+					_debois$elm_mdl$Material_Layout$fixedDrawer,
+					_debois$elm_mdl$Material_Layout$fixedTabs
 				]),
 			{
 				header: _user$project$Main$header(model),
