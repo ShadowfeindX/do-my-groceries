@@ -1,216 +1,337 @@
-var _user$project$Main$stylesheet = _debois$elm_mdl$Material_Options$stylesheet('\n  /* The following line is better done in html. We keep it here for\n     compatibility with elm-reactor.\n   */\n  @import url(\"assets/highlight/github-gist.css\");\n\n  blockquote:before { content: none; }\n  blockquote:after { content: none; }\n  blockquote {\n    border-left-style: solid;\n    border-width: 1px;\n    padding-left: 1.3ex;\n    border-color: rgb(255,82,82);\n      /* Really need a way to specify \"secondary color\" in\n         inline css.\n       */\n    font-style: normal;\n  }\n  p, blockquote {\n    max-width: 40em;\n  }\n\n  pre {\n    display: inline-block;\n    box-sizing: border-box;\n    min-width: 100%;\n    padding-top: .5rem;\n    padding-bottom: 1rem;\n    padding-left:1rem;\n    margin: 0;\n  }\n  code {\n    font-family: \'Roboto Mono\';\n  }\n  .mdl-layout__header--transparent {\n    background: url(\'https://getmdl.io/assets/demos/transparent.jpg\') center / cover;\n  }\n  .mdl-layout__header--transparent .mdl-layout__drawer-button {\n    /* This background is dark, so we set text to white. Use 87% black instead if\n       your background is light. */\n    color: white;\n  }\n');
-var _user$project$Main$header = function (model) {
-	return _elm_lang$core$Native_List.fromArray(
-		[
+var _user$project$Main$model = {
+	mdl: _debois$elm_mdl$Material$model,
+	currentTab: 0,
+	currentStore: {
+		name: '',
+		stock: 0,
+		inventory: _elm_lang$core$Native_List.fromArray(
+			[])
+	},
+	stores: function () {
+		var testdata = _elm_lang$core$Native_List.fromArray(
+			[
+				{
+				name: 'Walmart',
+				stock: 1,
+				inventory: _elm_lang$core$Native_List.fromArray(
+					[
+						{price: 3.75, name: 'Apples', img: ''}
+					])
+			},
+				{
+				name: 'Target',
+				stock: 1,
+				inventory: _elm_lang$core$Native_List.fromArray(
+					[
+						{price: 4.21, name: 'Oranges', img: ''}
+					])
+			},
+				{
+				name: 'Food Lion',
+				stock: 1,
+				inventory: _elm_lang$core$Native_List.fromArray(
+					[
+						{price: 4.22, name: 'Milk', img: ''}
+					])
+			}
+			]);
+		var stock = A3(
+			_elm_lang$core$List$foldl,
+			F2(
+				function (x, y) {
+					return x + y;
+				}),
+			0,
 			A2(
-			_debois$elm_mdl$Material_Layout$row,
-			_elm_lang$core$Native_List.fromArray(
-				[
-					A2(_debois$elm_mdl$Material_Options$css, 'transition', 'height 333ms ease-in-out 0s')
-				]),
-			_elm_lang$core$Native_List.fromArray(
-				[
-					A2(
-					_debois$elm_mdl$Material_Layout$title,
+				_elm_lang$core$List$map,
+				function (_) {
+					return _.stock;
+				},
+				testdata));
+		var inventory = A2(
+			_elm_community$list_extra$List_Extra$uniqueBy,
+			function (_) {
+				return _.name;
+			},
+			A2(
+				_elm_lang$core$List$sortBy,
+				function (_) {
+					return _.name;
+				},
+				A3(
+					_elm_lang$core$List$foldl,
+					F2(
+						function (x, y) {
+							return A2(_elm_lang$core$Basics_ops['++'], x, y);
+						}),
 					_elm_lang$core$Native_List.fromArray(
 						[]),
-					_elm_lang$core$Native_List.fromArray(
-						[
-							_elm_lang$html$Html$text('elm-mdl')
-						])),
-					_debois$elm_mdl$Material_Layout$spacer,
 					A2(
-					_debois$elm_mdl$Material_Layout$navigation,
-					_elm_lang$core$Native_List.fromArray(
-						[]),
-					_elm_lang$core$Native_List.fromArray(
-						[
-							A2(
-							_debois$elm_mdl$Material_Layout$link,
-							_elm_lang$core$Native_List.fromArray(
-								[
-									_debois$elm_mdl$Material_Layout$href('https://github.com/debois/elm-mdl')
-								]),
-							_elm_lang$core$Native_List.fromArray(
-								[
-									_debois$elm_mdl$Material_Icon$i('photo')
-								])),
-							A2(
-							_debois$elm_mdl$Material_Layout$link,
-							_elm_lang$core$Native_List.fromArray(
-								[
-									_debois$elm_mdl$Material_Layout$href('https://github.com/debois/elm-mdl')
-								]),
-							_elm_lang$core$Native_List.fromArray(
-								[
-									A2(
-									_elm_lang$html$Html$span,
-									_elm_lang$core$Native_List.fromArray(
-										[]),
-									_elm_lang$core$Native_List.fromArray(
-										[
-											_elm_lang$html$Html$text('github')
-										]))
-								])),
-							A2(
-							_debois$elm_mdl$Material_Layout$link,
-							_elm_lang$core$Native_List.fromArray(
-								[
-									_debois$elm_mdl$Material_Layout$href('http://package.elm-lang.org/packages/debois/elm-mdl/latest/')
-								]),
-							_elm_lang$core$Native_List.fromArray(
-								[
-									_elm_lang$html$Html$text('elm-package')
-								]))
-						]))
-				]))
-		]);
+						_elm_lang$core$List$map,
+						function (_) {
+							return _.inventory;
+						},
+						testdata))));
+		return A2(
+			_elm_lang$core$List_ops['::'],
+			{name: 'All', stock: stock, inventory: inventory},
+			testdata);
+	}()
 };
-var _user$project$Main$update = F2(
-	function (action, model) {
-		var _p0 = action;
-		if (_p0.ctor === 'Mdl') {
-			return A2(_debois$elm_mdl$Material$update, _p0._0, model);
-		} else {
-			return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
-		}
+var _user$project$Main$Model = F4(
+	function (a, b, c, d) {
+		return {mdl: a, currentTab: b, currentStore: c, stores: d};
 	});
-var _user$project$Main$model = {mdl: _debois$elm_mdl$Material$model, tab: 0};
-var _user$project$Main$Model = F2(
-	function (a, b) {
-		return {mdl: a, tab: b};
+var _user$project$Main$Store = F3(
+	function (a, b, c) {
+		return {name: a, stock: b, inventory: c};
 	});
-var _user$project$Main$Mdl = function (a) {
-	return {ctor: 'Mdl', _0: a};
+var _user$project$Main$Item = F3(
+	function (a, b, c) {
+		return {price: a, name: b, img: c};
+	});
+var _user$project$Main$SelectStore = function (a) {
+	return {ctor: 'SelectStore', _0: a};
 };
-var _user$project$Main$drawer = _elm_lang$core$Native_List.fromArray(
-	[
-		A2(
-		_debois$elm_mdl$Material_Layout$title,
-		_elm_lang$core$Native_List.fromArray(
-			[]),
-		_elm_lang$core$Native_List.fromArray(
-			[
-				_elm_lang$html$Html$text('Example drawer')
-			])),
-		A2(
-		_debois$elm_mdl$Material_Layout$navigation,
-		_elm_lang$core$Native_List.fromArray(
-			[]),
-		_elm_lang$core$Native_List.fromArray(
-			[
-				A2(
-				_debois$elm_mdl$Material_Layout$link,
-				_elm_lang$core$Native_List.fromArray(
-					[
-						_debois$elm_mdl$Material_Layout$href('https://github.com/debois/elm-mdl')
-					]),
-				_elm_lang$core$Native_List.fromArray(
-					[
-						_elm_lang$html$Html$text('github')
-					])),
-				A2(
-				_debois$elm_mdl$Material_Layout$link,
-				_elm_lang$core$Native_List.fromArray(
-					[
-						_debois$elm_mdl$Material_Layout$href('http://package.elm-lang.org/packages/debois/elm-mdl/latest/')
-					]),
-				_elm_lang$core$Native_List.fromArray(
-					[
-						_elm_lang$html$Html$text('elm-package')
-					])),
-				A2(
-				_debois$elm_mdl$Material_Layout$link,
-				_elm_lang$core$Native_List.fromArray(
-					[
-						_debois$elm_mdl$Material_Layout$href('#cards'),
-						_debois$elm_mdl$Material_Layout$onClick(
-						_debois$elm_mdl$Material_Layout$toggleDrawer(_user$project$Main$Mdl))
-					]),
-				_elm_lang$core$Native_List.fromArray(
-					[
-						_elm_lang$html$Html$text('Card component')
-					]))
-			]))
-	]);
 var _user$project$Main$SelectTab = function (a) {
 	return {ctor: 'SelectTab', _0: a};
 };
+var _user$project$Main$Mdl = function (a) {
+	return {ctor: 'Mdl', _0: a};
+};
 var _user$project$Main$view = function (model) {
-	var top = _elm_lang$html$Html$text('Hello from Elm!');
-	return function (contents) {
+	var main = function (_p0) {
+		var _p1 = _p0;
+		var _p3 = _p1._0;
+		var _p2 = _p1._1;
+		switch (_p2) {
+			case 0:
+				return _p3.stores;
+			case 1:
+				return _p3.groceries;
+			case 2:
+				return _p3.recipes;
+			default:
+				return A2(
+					_elm_lang$html$Html$body,
+					_elm_lang$core$Native_List.fromArray(
+						[]),
+					_elm_lang$core$Native_List.fromArray(
+						[]));
+		}
+	};
+	var drawer = function () {
+		var storelink = F2(
+			function (i, store) {
+				return A2(
+					_debois$elm_mdl$Material_Layout$link,
+					_elm_lang$core$Native_List.fromArray(
+						[
+							_debois$elm_mdl$Material_Layout$onClick(
+							_user$project$Main$SelectStore(i))
+						]),
+					_elm_lang$core$Native_List.fromArray(
+						[
+							_elm_lang$html$Html$text(store.name)
+						]));
+			});
+		var stores = A2(_elm_lang$core$List$indexedMap, storelink, model.stores);
 		return A2(
-			_elm_lang$html$Html$div,
+			_debois$elm_mdl$Material_Layout$navigation,
+			_elm_lang$core$Native_List.fromArray(
+				[]),
+			stores);
+	}();
+	var menu = A5(
+		_debois$elm_mdl$Material_Menu$render,
+		_user$project$Main$Mdl,
+		_elm_lang$core$Native_List.fromArray(
+			[0]),
+		model.mdl,
+		_elm_lang$core$Native_List.fromArray(
+			[_debois$elm_mdl$Material_Menu$ripple, _debois$elm_mdl$Material_Menu$bottomRight]),
+		_elm_lang$core$Native_List.fromArray(
+			[
+				A2(
+				_debois$elm_mdl$Material_Menu$item,
+				_elm_lang$core$Native_List.fromArray(
+					[]),
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html$text('Add Item')
+					])),
+				A2(
+				_debois$elm_mdl$Material_Menu$item,
+				_elm_lang$core$Native_List.fromArray(
+					[]),
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html$text('Add List')
+					])),
+				A2(
+				_debois$elm_mdl$Material_Menu$item,
+				_elm_lang$core$Native_List.fromArray(
+					[]),
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html$text('Delete List')
+					]))
+			]));
+	var header = A2(
+		_debois$elm_mdl$Material_Layout$row,
+		_elm_lang$core$Native_List.fromArray(
+			[]),
+		_elm_lang$core$Native_List.fromArray(
+			[
+				A2(
+				_debois$elm_mdl$Material_Layout$title,
+				_elm_lang$core$Native_List.fromArray(
+					[]),
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html$text('Do My Groceries')
+					])),
+				_debois$elm_mdl$Material_Layout$spacer,
+				menu
+			]));
+	var pages = {
+		stores: function () {
+			var stock = function (item) {
+				return A2(
+					_debois$elm_mdl$Material_List$li,
+					_elm_lang$core$Native_List.fromArray(
+						[]),
+					_elm_lang$core$Native_List.fromArray(
+						[
+							A2(
+							_debois$elm_mdl$Material_List$content,
+							_elm_lang$core$Native_List.fromArray(
+								[]),
+							_elm_lang$core$Native_List.fromArray(
+								[
+									_elm_lang$html$Html$text(
+									A2(
+										_elm_lang$core$Basics_ops['++'],
+										item.name,
+										A2(
+											_elm_lang$core$Basics_ops['++'],
+											' - $',
+											_elm_lang$core$Basics$toString(item.price))))
+								]))
+						]));
+			};
+			var inventory = A2(
+				_elm_lang$core$List$map,
+				stock,
+				function (_) {
+					return _.inventory;
+				}(model.currentStore));
+			return A2(
+				_debois$elm_mdl$Material_List$ul,
+				_elm_lang$core$Native_List.fromArray(
+					[]),
+				inventory);
+		}(),
+		groceries: menu,
+		recipes: A2(
+			_elm_lang$html$Html$body,
 			_elm_lang$core$Native_List.fromArray(
 				[]),
 			_elm_lang$core$Native_List.fromArray(
 				[
-					A3(_debois$elm_mdl$Material_Scheme$topWithScheme, _debois$elm_mdl$Material_Color$Blue, _debois$elm_mdl$Material_Color$Amber, contents),
-					A3(
-					_elm_lang$html$Html$node,
-					'script',
-					_elm_lang$core$Native_List.fromArray(
-						[
-							A2(_elm_lang$html$Html_Attributes$attribute, 'src', 'https://cdn.polyfill.io/v2/polyfill.js?features=Event.focusin')
-						]),
-					_elm_lang$core$Native_List.fromArray(
-						[])),
-					A3(
-					_elm_lang$html$Html$node,
-					'script',
-					_elm_lang$core$Native_List.fromArray(
-						[
-							A2(_elm_lang$html$Html_Attributes$attribute, 'src', 'assets/highlight/highlight.pack.js')
-						]),
-					_elm_lang$core$Native_List.fromArray(
-						[]))
-				]));
-	}(
+					_elm_lang$html$Html$text('Page 3')
+				]))
+	};
+	var tabs = _elm_lang$core$Native_List.fromArray(
+		[
+			_elm_lang$html$Html$text('Stores'),
+			_elm_lang$html$Html$text('Groceries'),
+			_elm_lang$html$Html$text('Recipes')
+		]);
+	return A3(
+		_debois$elm_mdl$Material_Scheme$topWithScheme,
+		_debois$elm_mdl$Material_Color$Blue,
+		_debois$elm_mdl$Material_Color$Amber,
 		A4(
 			_debois$elm_mdl$Material_Layout$render,
 			_user$project$Main$Mdl,
 			model.mdl,
 			_elm_lang$core$Native_List.fromArray(
 				[
-					_debois$elm_mdl$Material_Layout$selectedTab(model.tab),
-					_debois$elm_mdl$Material_Layout$onSelectTab(_user$project$Main$SelectTab),
 					_debois$elm_mdl$Material_Layout$fixedHeader,
 					_debois$elm_mdl$Material_Layout$fixedDrawer,
-					_debois$elm_mdl$Material_Layout$fixedTabs
+					_debois$elm_mdl$Material_Layout$selectedTab(model.currentTab),
+					_debois$elm_mdl$Material_Layout$onSelectTab(_user$project$Main$SelectTab)
 				]),
 			{
-				header: _user$project$Main$header(model),
-				drawer: _user$project$Main$drawer,
+				header: _elm_lang$core$Native_List.fromArray(
+					[header]),
+				drawer: _elm_lang$core$Native_List.fromArray(
+					[drawer]),
 				tabs: {
 					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_List.fromArray(
-						[]),
+					_0: tabs,
 					_1: _elm_lang$core$Native_List.fromArray(
-						[])
+						[
+							_debois$elm_mdl$Material_Color$background(
+							A2(_debois$elm_mdl$Material_Color$color, _debois$elm_mdl$Material_Color$Amber, _debois$elm_mdl$Material_Color$A700))
+						])
 				},
 				main: _elm_lang$core$Native_List.fromArray(
-					[_user$project$Main$stylesheet, top])
+					[
+						main(
+						{ctor: '_Tuple2', _0: pages, _1: model.currentTab})
+					])
 			}));
 };
+var _user$project$Main$controller = F2(
+	function (msg, model) {
+		var _p4 = msg;
+		switch (_p4.ctor) {
+			case 'Mdl':
+				return A2(_debois$elm_mdl$Material$update, _p4._0, model);
+			case 'SelectTab':
+				return A2(
+					_elm_lang$core$Platform_Cmd_ops['!'],
+					_elm_lang$core$Native_Utils.update(
+						model,
+						{currentTab: _p4._0}),
+					_elm_lang$core$Native_List.fromArray(
+						[]));
+			default:
+				var cmd = _debois$elm_mdl$Material_Helpers$cmd(
+					_debois$elm_mdl$Material_Layout$toggleDrawer(_user$project$Main$Mdl));
+				var currentStore = A2(
+					_elm_lang$core$Maybe$withDefault,
+					model.currentStore,
+					A2(_elm_community$list_extra$List_Extra_ops['!!'], model.stores, _p4._0));
+				var $new = _elm_lang$core$Native_Utils.update(
+					model,
+					{currentStore: currentStore});
+				return A2(
+					_elm_lang$core$Platform_Cmd_ops['!'],
+					$new,
+					_elm_lang$core$Native_List.fromArray(
+						[cmd]));
+		}
+	});
 var _user$project$Main$main = {
 	main: function () {
-		var subscriptions = function (model) {
+		var subs = function (model) {
 			return _elm_lang$core$Platform_Sub$batch(
 				_elm_lang$core$Native_List.fromArray(
 					[
 						A2(_debois$elm_mdl$Material$subscriptions, _user$project$Main$Mdl, model)
 					]));
 		};
-		var init = {
-			ctor: '_Tuple2',
-			_0: _elm_lang$core$Native_Utils.update(
-				_user$project$Main$model,
-				{
-					mdl: A2(_debois$elm_mdl$Material_Layout$setTabsWidth, 2124, _user$project$Main$model.mdl)
-				}),
-			_1: _debois$elm_mdl$Material$init(_user$project$Main$Mdl)
-		};
+		var init = A2(
+			_elm_lang$core$Platform_Cmd_ops['!'],
+			_user$project$Main$model,
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_debois$elm_mdl$Material$init(_user$project$Main$Mdl)
+				]));
 		return _elm_lang$html$Html_App$program(
-			{init: init, view: _user$project$Main$view, subscriptions: subscriptions, update: _user$project$Main$update});
+			{init: init, subscriptions: subs, update: _user$project$Main$controller, view: _user$project$Main$view});
 	}()
 };

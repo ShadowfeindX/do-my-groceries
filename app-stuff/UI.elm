@@ -11,6 +11,9 @@ import Html.Attributes as Attributes
 -- MATERIAL
 
 import Material
+import Material.Elevation as Elevation
+import Material.Menu as Menu
+import Material.Helpers as Helpers
 import Material.List as List
 import Material.Color as Color
 import Material.Scheme as Scheme
@@ -18,14 +21,21 @@ import Material.Layout as Layout
 
 
 -- COMPONENTS
+
+import Maybe exposing (..)
+import Array exposing (..)
+import List exposing (..)
+import List.Extra exposing (..)
+
+
 -- TYPES
 
 
 type alias Model =
     { mdl : Material.Model
-    , currentStore : Store
     , currentTab : Int
-    , totalStores : Int
+    , currentStore : Store
+    , stores : List Store
     }
 
 
@@ -37,7 +47,7 @@ type alias Store =
 
 
 type alias Item =
-    { cost : Float
+    { price : Float
     , name : String
     , img : String
     }
@@ -46,7 +56,7 @@ type alias Item =
 type Msg
     = Mdl (Material.Msg Msg)
     | SelectTab Int
-    | SelectStore String
+    | SelectStore Int
 
 
 
@@ -56,7 +66,7 @@ type Msg
 main =
     let
         init =
-            ( model, Cmd.batch [ Material.init Mdl ] )
+            model ! [ Material.init Mdl ]
 
         subs model =
             Sub.batch [ Material.subscriptions Mdl model ]
@@ -75,13 +85,33 @@ main =
 
 model =
     { mdl = Material.model
+    , currentTab = 0
     , currentStore =
-        { name = "All"
+        { name = ""
         , stock = 0
         , inventory = []
         }
-    , currentTab = 0
-    , totalStores = 3
+    , stores =
+        let
+            testdata =
+                [ { name = "Walmart", stock = 1, inventory = [ { price = 3.75, name = "Apples", img = "" } ] }
+                , { name = "Target", stock = 1, inventory = [ { price = 4.21, name = "Oranges", img = "" } ] }
+                , { name = "Food Lion", stock = 1, inventory = [ { price = 4.22, name = "Milk", img = "" } ] }
+                ]
+
+            stock =
+                testdata
+                    |> List.map .stock
+                    |> List.foldl (+) 0
+
+            inventory =
+                testdata
+                    |> List.map .inventory
+                    |> List.foldl (++) []
+                    |> List.sortBy .name
+                    |> uniqueBy .name
+        in
+            { name = "All", stock = stock, inventory = inventory } :: testdata
     }
 
 
@@ -90,31 +120,52 @@ view model =
         tabs =
             [ Html.text "Stores", Html.text "Groceries", Html.text "Recipes" ]
 
+        menu =
+            Menu.render Mdl
+                [ 0 ]
+                model.mdl
+                [ Menu.ripple, Menu.bottomRight ]
+                [ Menu.item [] [ Html.text "Add Item" ]
+                , Menu.item [] [ Html.text "Add List" ]
+                , Menu.item [] [ Html.text "Delete List" ]
+                ]
+
         header =
             Layout.row []
                 [ Layout.title []
                     [ Html.text "Do My Groceries" ]
+                , Layout.spacer
+                , menu
                 ]
 
         drawer =
-            Layout.navigation []
-                [ Layout.link [ Layout.onClick <| SelectStore "All" ] [ Html.text "All" ]
-                , Layout.link [ Layout.onClick <| SelectStore "Walmart" ] [ Html.text "Walmart" ]
-                , Layout.link [ Layout.onClick <| SelectStore "Target" ] [ Html.text "Target" ]
-                , Layout.link [ Layout.onClick <| SelectStore "Food Lion" ] [ Html.text "Food Lion" ]
-                ]
+            let
+                storelink i store =
+                    Layout.link [ Layout.onClick <| SelectStore i ] [ Html.text store.name ]
+
+                stores =
+                    List.indexedMap storelink model.stores
+            in
+                Layout.navigation [] stores
 
         pages =
             { stores =
-                List.ul []
-                    [ List.li []
-                        [ List.content [] [ Html.text model.currentStore.name ] ]
-                    , List.li []
-                        [ List.content [] [ Html.text model.currentStore.name ] ]
-                    , List.li []
-                        [ List.content [] [ Html.text model.currentStore.name ] ]
-                    ]
-            , groceries = Html.body [] [ Html.text "Page 2" ]
+                let
+                    inventory =
+                        model.currentStore
+                            |> .inventory
+                            |> List.map stock
+
+                    stock item =
+                        List.li []
+                            [ List.content []
+                                [ Html.text <| item.name ++ " - $" ++ toString item.price ]
+                            ]
+                in
+                    List.ul [] inventory
+            , groceries =
+                menu
+                --Html.body [] [ Html.text "Page 2" ]
             , recipes = Html.body [] [ Html.text "Page 3" ]
             }
 
@@ -136,7 +187,6 @@ view model =
             model.mdl
             [ Layout.fixedHeader
             , Layout.fixedDrawer
-            , Layout.waterfall False
             , Layout.selectedTab model.currentTab
             , Layout.onSelectTab SelectTab
             ]
@@ -154,21 +204,22 @@ controller msg model =
             Material.update action model
 
         SelectTab tab ->
-            ( { model
-                | currentTab = tab
-              }
-            , Cmd.none
-            )
+            { model | currentTab = tab } ! []
 
         SelectStore store ->
             let
-                newModel =
-                    model.currentStore
-
                 currentStore =
-                    { newModel | name = store }
+                    model.stores
+                        !! store
+                        |> withDefault model.currentStore
+
+                new =
+                    { model | currentStore = currentStore }
+
+                cmd =
+                    Helpers.cmd <| Layout.toggleDrawer Mdl
             in
-                ( { model | currentStore = currentStore }, Cmd.map Mdl Layout.toggleDrawer )
+                new ! [ cmd ]
 
 
 
