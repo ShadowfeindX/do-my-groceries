@@ -14962,15 +14962,45 @@ var _elm_community$list_extra$List_Extra$init = function () {
 var _elm_community$list_extra$List_Extra$last = _elm_community$list_extra$List_Extra$foldl1(
 	_elm_lang$core$Basics$flip(_elm_lang$core$Basics$always));
 
-var _user$project$UI$model = {
+var _user$project$Main$model = {
 	mdl: _debois$elm_mdl$Material$model,
 	currentTab: 0,
+	currentBasket: {
+		ctor: '_Tuple2',
+		_0: '',
+		_1: _elm_lang$core$Native_List.fromArray(
+			[])
+	},
 	currentStore: {
 		name: '',
 		stock: 0,
 		inventory: _elm_lang$core$Native_List.fromArray(
 			[])
 	},
+	baskets: function () {
+		var testdata = _elm_lang$core$Native_List.fromArray(
+			[
+				{
+				amount: 4,
+				item: {price: 3.75, name: 'Apples', img: ''},
+				store: 'Walmart'
+			},
+				{
+				amount: 6,
+				item: {price: 4.21, name: 'Oranges', img: ''},
+				store: 'Target'
+			},
+				{
+				amount: 1,
+				item: {price: 4.22, name: 'Milk', img: ''},
+				store: 'Food Lion'
+			}
+			]);
+		return _elm_lang$core$Native_List.fromArray(
+			[
+				{ctor: '_Tuple2', _0: 'All', _1: testdata}
+			]);
+	}(),
 	stores: function () {
 		var testdata = _elm_lang$core$Native_List.fromArray(
 			[
@@ -15042,28 +15072,35 @@ var _user$project$UI$model = {
 			testdata);
 	}()
 };
-var _user$project$UI$Model = F4(
-	function (a, b, c, d) {
-		return {mdl: a, currentTab: b, currentStore: c, stores: d};
+var _user$project$Main$Model = F6(
+	function (a, b, c, d, e, f) {
+		return {mdl: a, currentTab: b, currentBasket: c, currentStore: d, baskets: e, stores: f};
 	});
-var _user$project$UI$Store = F3(
+var _user$project$Main$Grocery = F3(
+	function (a, b, c) {
+		return {amount: a, item: b, store: c};
+	});
+var _user$project$Main$Store = F3(
 	function (a, b, c) {
 		return {name: a, stock: b, inventory: c};
 	});
-var _user$project$UI$Item = F3(
+var _user$project$Main$Item = F3(
 	function (a, b, c) {
 		return {price: a, name: b, img: c};
 	});
-var _user$project$UI$SelectStore = function (a) {
+var _user$project$Main$SelectBasket = function (a) {
+	return {ctor: 'SelectBasket', _0: a};
+};
+var _user$project$Main$SelectStore = function (a) {
 	return {ctor: 'SelectStore', _0: a};
 };
-var _user$project$UI$SelectTab = function (a) {
+var _user$project$Main$SelectTab = function (a) {
 	return {ctor: 'SelectTab', _0: a};
 };
-var _user$project$UI$Mdl = function (a) {
+var _user$project$Main$Mdl = function (a) {
 	return {ctor: 'Mdl', _0: a};
 };
-var _user$project$UI$view = function (model) {
+var _user$project$Main$view = function (model) {
 	var main = function (_p0) {
 		var _p1 = _p0;
 		var _p3 = _p1._0;
@@ -15084,7 +15121,109 @@ var _user$project$UI$view = function (model) {
 						[]));
 		}
 	};
+	var pages = function () {
+		var _p4 = model.currentBasket;
+		var currentBasket = _p4._1;
+		var buy = function (grocery) {
+			var cost = grocery.item.price * grocery.amount;
+			var amt = _elm_lang$core$Basics$toString(grocery.amount);
+			var name = grocery.item.name;
+			return A2(
+				_elm_lang$core$Basics_ops['++'],
+				amt,
+				A2(
+					_elm_lang$core$Basics_ops['++'],
+					' ',
+					A2(
+						_elm_lang$core$Basics_ops['++'],
+						name,
+						A2(
+							_elm_lang$core$Basics_ops['++'],
+							' $',
+							_elm_lang$core$Basics$toString(cost)))));
+		};
+		var stock = function (item) {
+			return A2(
+				_elm_lang$core$Basics_ops['++'],
+				item.name,
+				A2(
+					_elm_lang$core$Basics_ops['++'],
+					' - $',
+					_elm_lang$core$Basics$toString(item.price)));
+		};
+		var format = function (list) {
+			return A2(
+				_debois$elm_mdl$Material_List$li,
+				_elm_lang$core$Native_List.fromArray(
+					[]),
+				_elm_lang$core$Native_List.fromArray(
+					[
+						A2(
+						_debois$elm_mdl$Material_List$content,
+						_elm_lang$core$Native_List.fromArray(
+							[]),
+						list)
+					]));
+		};
+		var inv = F2(
+			function (cmd, item) {
+				return format(
+					_elm_lang$core$Native_List.fromArray(
+						[
+							_elm_lang$html$Html$text(
+							cmd(item))
+						]));
+			});
+		var basket = A2(
+			_elm_lang$core$List$map,
+			inv(buy),
+			currentBasket);
+		var inventory = A2(
+			_elm_lang$core$List$map,
+			inv(stock),
+			function (_) {
+				return _.inventory;
+			}(model.currentStore));
+		return {
+			stores: A2(
+				_debois$elm_mdl$Material_List$ul,
+				_elm_lang$core$Native_List.fromArray(
+					[]),
+				inventory),
+			groceries: A2(
+				_debois$elm_mdl$Material_List$ul,
+				_elm_lang$core$Native_List.fromArray(
+					[]),
+				basket),
+			recipes: A2(
+				_elm_lang$html$Html$body,
+				_elm_lang$core$Native_List.fromArray(
+					[]),
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html$text('Page 3')
+					]))
+		};
+	}();
 	var drawer = function () {
+		var recipes = _elm_lang$core$Native_List.fromArray(
+			[]);
+		var basketlink = F2(
+			function (i, _p5) {
+				var _p6 = _p5;
+				return A2(
+					_debois$elm_mdl$Material_Layout$link,
+					_elm_lang$core$Native_List.fromArray(
+						[
+							_debois$elm_mdl$Material_Layout$onClick(
+							_user$project$Main$SelectBasket(i))
+						]),
+					_elm_lang$core$Native_List.fromArray(
+						[
+							_elm_lang$html$Html$text(_p6._0)
+						]));
+			});
+		var baskets = A2(_elm_lang$core$List$indexedMap, basketlink, model.baskets);
 		var storelink = F2(
 			function (i, store) {
 				return A2(
@@ -15092,7 +15231,7 @@ var _user$project$UI$view = function (model) {
 					_elm_lang$core$Native_List.fromArray(
 						[
 							_debois$elm_mdl$Material_Layout$onClick(
-							_user$project$UI$SelectStore(i))
+							_user$project$Main$SelectStore(i))
 						]),
 					_elm_lang$core$Native_List.fromArray(
 						[
@@ -15100,15 +15239,39 @@ var _user$project$UI$view = function (model) {
 						]));
 			});
 		var stores = A2(_elm_lang$core$List$indexedMap, storelink, model.stores);
-		return A2(
-			_debois$elm_mdl$Material_Layout$navigation,
-			_elm_lang$core$Native_List.fromArray(
-				[]),
-			stores);
+		var tab = model.currentTab;
+		var _p7 = tab;
+		switch (_p7) {
+			case 0:
+				return A2(
+					_debois$elm_mdl$Material_Layout$navigation,
+					_elm_lang$core$Native_List.fromArray(
+						[]),
+					stores);
+			case 1:
+				return A2(
+					_debois$elm_mdl$Material_Layout$navigation,
+					_elm_lang$core$Native_List.fromArray(
+						[]),
+					baskets);
+			case 2:
+				return A2(
+					_debois$elm_mdl$Material_Layout$navigation,
+					_elm_lang$core$Native_List.fromArray(
+						[]),
+					recipes);
+			default:
+				return A2(
+					_debois$elm_mdl$Material_Layout$navigation,
+					_elm_lang$core$Native_List.fromArray(
+						[]),
+					_elm_lang$core$Native_List.fromArray(
+						[]));
+		}
 	}();
 	var menu = A5(
 		_debois$elm_mdl$Material_Menu$render,
-		_user$project$UI$Mdl,
+		_user$project$Main$Mdl,
 		_elm_lang$core$Native_List.fromArray(
 			[0]),
 		model.mdl,
@@ -15119,7 +15282,7 @@ var _user$project$UI$view = function (model) {
 				A2(
 				_debois$elm_mdl$Material_Menu$item,
 				_elm_lang$core$Native_List.fromArray(
-					[]),
+					[_debois$elm_mdl$Material_Menu$divider]),
 				_elm_lang$core$Native_List.fromArray(
 					[
 						_elm_lang$html$Html$text('Add Item')
@@ -15158,54 +15321,6 @@ var _user$project$UI$view = function (model) {
 				_debois$elm_mdl$Material_Layout$spacer,
 				menu
 			]));
-	var pages = {
-		stores: function () {
-			var stock = function (item) {
-				return A2(
-					_debois$elm_mdl$Material_List$li,
-					_elm_lang$core$Native_List.fromArray(
-						[]),
-					_elm_lang$core$Native_List.fromArray(
-						[
-							A2(
-							_debois$elm_mdl$Material_List$content,
-							_elm_lang$core$Native_List.fromArray(
-								[]),
-							_elm_lang$core$Native_List.fromArray(
-								[
-									_elm_lang$html$Html$text(
-									A2(
-										_elm_lang$core$Basics_ops['++'],
-										item.name,
-										A2(
-											_elm_lang$core$Basics_ops['++'],
-											' - $',
-											_elm_lang$core$Basics$toString(item.price))))
-								]))
-						]));
-			};
-			var inventory = A2(
-				_elm_lang$core$List$map,
-				stock,
-				function (_) {
-					return _.inventory;
-				}(model.currentStore));
-			return A2(
-				_debois$elm_mdl$Material_List$ul,
-				_elm_lang$core$Native_List.fromArray(
-					[]),
-				inventory);
-		}(),
-		groceries: menu,
-		recipes: A2(
-			_elm_lang$html$Html$body,
-			_elm_lang$core$Native_List.fromArray(
-				[]),
-			_elm_lang$core$Native_List.fromArray(
-				[
-					_elm_lang$html$Html$text('Page 3')
-				]))
-	};
 	var tabs = _elm_lang$core$Native_List.fromArray(
 		[
 			_elm_lang$html$Html$text('Stores'),
@@ -15218,14 +15333,14 @@ var _user$project$UI$view = function (model) {
 		_debois$elm_mdl$Material_Color$Amber,
 		A4(
 			_debois$elm_mdl$Material_Layout$render,
-			_user$project$UI$Mdl,
+			_user$project$Main$Mdl,
 			model.mdl,
 			_elm_lang$core$Native_List.fromArray(
 				[
 					_debois$elm_mdl$Material_Layout$fixedHeader,
 					_debois$elm_mdl$Material_Layout$fixedDrawer,
 					_debois$elm_mdl$Material_Layout$selectedTab(model.currentTab),
-					_debois$elm_mdl$Material_Layout$onSelectTab(_user$project$UI$SelectTab)
+					_debois$elm_mdl$Material_Layout$onSelectTab(_user$project$Main$SelectTab)
 				]),
 			{
 				header: _elm_lang$core$Native_List.fromArray(
@@ -15248,27 +15363,27 @@ var _user$project$UI$view = function (model) {
 					])
 			}));
 };
-var _user$project$UI$controller = F2(
+var _user$project$Main$controller = F2(
 	function (msg, model) {
-		var _p4 = msg;
-		switch (_p4.ctor) {
+		var _p8 = msg;
+		switch (_p8.ctor) {
 			case 'Mdl':
-				return A2(_debois$elm_mdl$Material$update, _p4._0, model);
+				return A2(_debois$elm_mdl$Material$update, _p8._0, model);
 			case 'SelectTab':
 				return A2(
 					_elm_lang$core$Platform_Cmd_ops['!'],
 					_elm_lang$core$Native_Utils.update(
 						model,
-						{currentTab: _p4._0}),
+						{currentTab: _p8._0}),
 					_elm_lang$core$Native_List.fromArray(
 						[]));
-			default:
+			case 'SelectStore':
 				var cmd = _debois$elm_mdl$Material_Helpers$cmd(
-					_debois$elm_mdl$Material_Layout$toggleDrawer(_user$project$UI$Mdl));
+					_debois$elm_mdl$Material_Layout$toggleDrawer(_user$project$Main$Mdl));
 				var currentStore = A2(
 					_elm_lang$core$Maybe$withDefault,
 					model.currentStore,
-					A2(_elm_community$list_extra$List_Extra_ops['!!'], model.stores, _p4._0));
+					A2(_elm_community$list_extra$List_Extra_ops['!!'], model.stores, _p8._0));
 				var $new = _elm_lang$core$Native_Utils.update(
 					model,
 					{currentStore: currentStore});
@@ -15277,32 +15392,47 @@ var _user$project$UI$controller = F2(
 					$new,
 					_elm_lang$core$Native_List.fromArray(
 						[cmd]));
+			default:
+				var cmd = _debois$elm_mdl$Material_Helpers$cmd(
+					_debois$elm_mdl$Material_Layout$toggleDrawer(_user$project$Main$Mdl));
+				var currentBasket = A2(
+					_elm_lang$core$Maybe$withDefault,
+					model.currentBasket,
+					A2(_elm_community$list_extra$List_Extra_ops['!!'], model.baskets, _p8._0));
+				var $new = _elm_lang$core$Native_Utils.update(
+					model,
+					{currentBasket: currentBasket});
+				return A2(
+					_elm_lang$core$Platform_Cmd_ops['!'],
+					$new,
+					_elm_lang$core$Native_List.fromArray(
+						[cmd]));
 		}
 	});
-var _user$project$UI$main = {
+var _user$project$Main$main = {
 	main: function () {
 		var subs = function (model) {
 			return _elm_lang$core$Platform_Sub$batch(
 				_elm_lang$core$Native_List.fromArray(
 					[
-						A2(_debois$elm_mdl$Material$subscriptions, _user$project$UI$Mdl, model)
+						A2(_debois$elm_mdl$Material$subscriptions, _user$project$Main$Mdl, model)
 					]));
 		};
 		var init = A2(
 			_elm_lang$core$Platform_Cmd_ops['!'],
-			_user$project$UI$model,
+			_user$project$Main$model,
 			_elm_lang$core$Native_List.fromArray(
 				[
-					_debois$elm_mdl$Material$init(_user$project$UI$Mdl)
+					_debois$elm_mdl$Material$init(_user$project$Main$Mdl)
 				]));
 		return _elm_lang$html$Html_App$program(
-			{init: init, subscriptions: subs, update: _user$project$UI$controller, view: _user$project$UI$view});
+			{init: init, subscriptions: subs, update: _user$project$Main$controller, view: _user$project$Main$view});
 	}()
 };
 
 var Elm = {};
-Elm['UI'] = Elm['UI'] || {};
-_elm_lang$core$Native_Platform.addPublicModule(Elm['UI'], 'UI', typeof _user$project$UI$main === 'undefined' ? null : _user$project$UI$main);
+Elm['Main'] = Elm['Main'] || {};
+_elm_lang$core$Native_Platform.addPublicModule(Elm['Main'], 'Main', typeof _user$project$Main$main === 'undefined' ? null : _user$project$Main$main);
 
 if (typeof define === "function" && define['amd'])
 {
